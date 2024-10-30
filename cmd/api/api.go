@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/QuocAnh189/DemoEcom/services/product"
 	"github.com/QuocAnh189/DemoEcom/services/user"
 	"github.com/gorilla/mux"
 )
@@ -28,6 +29,10 @@ func (server *APIServer) Run() error {
 	userStore := user.NewStore(server.db)
 	userHandler := user.NewHandler(userStore)
 	userHandler.RegisterRoutes(subrouter)
+
+	productStore := product.NewStore(server.db)
+	productHandler := product.NewHandler(productStore, userStore)
+	productHandler.RegisterRoutes(subrouter)
 
 	// Serve static files
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))

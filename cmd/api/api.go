@@ -24,7 +24,7 @@ func (server *APIServer) Run() error {
 
 	// router.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 	subrouter.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World"))
+		w.Write([]byte("Hello Anh Quoc"))
 	}).Methods("GET")
 
 	log.Print("Server is running on ", server.addr)

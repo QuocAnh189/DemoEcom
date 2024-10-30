@@ -1,0 +1,14 @@
+# .air.toml
+root = "."  
+tmp_dir = "tmp"
+include_dir = ["cmd"]  
+exclude_dir = ["tmp", "vendor"]
+
+[build]
+  bin = "tmp/main.exe" 
+  cmd = "go build -o tmp/main.exe ./cmd"
+  include_ext = ["go"]
+  exclude_ext = ["test.go"]
+
+[log]
+  level = "info"

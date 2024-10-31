@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -26,6 +27,10 @@ func NewAPIServer(addr string, db *sql.DB) *APIServer {
 
 func (server *APIServer) Run() error {
 	router := mux.NewRouter()
+	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		json.NewEncoder(w).Encode(map[string]string{"status": "Successfully updated"})
+	}).Methods(http.MethodGet)
+
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 
 	userStore := user.NewStore(server.db)

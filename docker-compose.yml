@@ -1,0 +1,35 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0
+    healthcheck:
+      test: "exit 0"
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: QuocAnh-1809
+      MYSQL_DATABASE: learn_golang
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    volumes:
+      - .:/go/src/api
+    ports:
+      - "9090:9090"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: QuocAnh-1809
+      DB_NAME: learn_golang
+    links:
+      - db
+    depends_on:
+      - db
+
+volumes:
+  db_data:
